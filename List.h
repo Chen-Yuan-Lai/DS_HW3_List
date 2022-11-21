@@ -1,12 +1,16 @@
 #ifndef LIST_H
 #define LIST_H
 using namespace std;
+
 template <class T>
 class List
 { // A finite ordered list with zero or more elements.
 public:
     List(int queueCapcity = 10);
     // Create and empty queue whose initial capicity is queueCapicity
+
+    ~List();
+    // destructor
 
     int IsEmpty() const;
     // If number of element in the queue is 0, return 1 else return 0
@@ -26,7 +30,7 @@ public:
     void changeSize(const int newSize);
     // resizing the queue array
 
-    template <class U>
+    template <typename U>
     friend ostream &operator<<(ostream &os, List<U> &s);
 
 private:

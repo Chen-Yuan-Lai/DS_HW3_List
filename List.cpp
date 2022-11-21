@@ -4,24 +4,30 @@ using namespace std;
 
 template <class T>
 List<T>::List(int queueCapcity) : capacity(queueCapcity)
-{
+{ // constructor
     if (capacity < 1)
     {
         throw "List capacity must be > 0";
-        queue = new T[capacity];
-        fill(queue, queue + capacity, 0); // initialise new array to 0
-        front = rear = 0;
     }
+    queue = new T[capacity];
+    fill(queue, queue + capacity, 1); // initialize new array to 0
+    front = rear = 0;
 }
 
 template <class T>
-List<T>::IsEmpty()
+List<T>::~List()
+{
+    delete[] queue;
+}
+
+template <class T>
+inline int List<T>::IsEmpty() const
 {
     return front == rear;
 }
 
-template <calss T>
-inline T &List<T>::Front()
+template <class T>
+inline T &List<T>::Front() const
 {
     if (IsEmpty())
     {
@@ -31,7 +37,7 @@ inline T &List<T>::Front()
 }
 
 template <class T>
-inline T &List<T>::Rear()
+inline T &List<T>::Rear() const
 {
     if (IsEmpty())
     {
@@ -68,7 +74,7 @@ void List<T>::changeSize(const int newSize)
 }
 
 template <class T>
-void List<T>::Push(const &x)
+void List<T>::Push(const T &x)
 { // Add x at rear of queue
     if ((rear + 1) % capacity == front)
     { // queue full, double capacity
