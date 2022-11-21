@@ -4,29 +4,39 @@ using namespace std;
 
 template <class T>
 class List
-{ // A circular quene
+{ // A finite ordered list with zero or more elements.
 public:
-    List(int ListCapicity = 10);
-    // create an empty quene whose initial is queneCapicity
+    List(int queueCapcity = 10);
+    // Create and empty queue whose initial capicity is queueCapicity
+
+    ~List();
+    // destructor
 
     int IsEmpty() const;
-    // If number of elements in the quene is 0, return true else return false
+    // If number of element in the queue is 0, return 1 else return 0
 
     T &Front() const;
-    // Return the element at the front of the quene
+    // Return the element at the front og the queue
 
     T &Rear() const;
-    // Return the element at the rear of the quene
+    // Return the element at the rear of the queue
 
     void Push(const T &item);
-    // Insert item at the rear of the quene
+    // Insert item at rear of the queue
 
     void Pop();
-    // Delete the front element of the quene
+    // Delete the front element of the queue
+
+    void changeSize(const int newSize);
+    // resizing the queue array
+
+    template <typename U>
+    friend ostream &operator<<(ostream &os, List<U> &s);
+
 private:
-    T *quene;     // array for quene
+    T *queue;     // array for queue elements
     int front,    // one counterclockwise from front
         rear,     // array position of rear element
-        capacity; // capacity of quene array
+        capacity; // capacity of queue array
 };
 #endif
