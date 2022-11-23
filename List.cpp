@@ -10,7 +10,6 @@ List<T>::List(int queueCapcity) : capacity(queueCapcity)
         throw "List capacity must be > 0";
     }
     queue = new T[capacity];
-    fill(queue, queue + capacity, 1); // initialize new array to 0
     front = rear = 0;
 }
 
@@ -98,9 +97,39 @@ void List<T>::Pop()
 template <class T>
 ostream &operator<<(ostream &os, List<T> &s)
 {
+    // print array index
     for (int i = 0; i < s.capacity; i++)
     {
-        os << s.queue[i] << endl;
+        os << "[" << i << "]"
+           << "  ";
     }
+    os << endl;
+
+    for (int i = 0; i < s.capacity; i++)
+    {
+        if (s.front + 1 > s.rear)
+        {
+            if (i <= s.rear || i > s.front)
+            {
+                os << s.queue[i] << "  ";
+            }
+            else
+            {
+                os << "   ";
+            }
+        }
+        else
+        {
+            if (i < s.rear || i > s.front)
+            {
+                os << "   ";
+            }
+            else
+            {
+                os << s.queue[i] << "  ";
+            }
+        }
+    }
+    os << endl;
     return os;
 }
