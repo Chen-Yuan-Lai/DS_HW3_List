@@ -21,6 +21,16 @@ public:
     T &Rear() const;
     // Return the element at the rear of the queue
 
+    int getFront() const { return front; }
+
+    int getRear() const { return rear; }
+
+    int getSize() const;
+
+    int getElement(int loc) const;
+
+    void Delete(const int k);
+
     void Push(const T &item);
     // Insert item at rear of the queue
 

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include "List.h"
 using namespace std;
 
@@ -53,7 +54,6 @@ void List<T>::changeSize(const int newSize)
         throw "New size must be >= number of capacity";
     }
     T *newQueue = new T[newSize];
-    fill(newQueue, newQueue + newSize, 0);
     int start = (front + 1) % capacity;
     if (start < 2)
     { // no wrap around
@@ -70,6 +70,22 @@ void List<T>::changeSize(const int newSize)
     capacity = newSize;
     delete[] queue;
     queue = newQueue;
+}
+
+template <class T>
+void List<T>::Delete(const int k)
+{ // Delete the kth element
+    if (IsEmpty())
+    {
+        throw "List is empty. Caannot delete";
+    }
+    if (front > rear)
+    {
+        while (k == front + 1)
+        {
+            queue[k] = queue[--k]
+        }
+    }
 }
 
 template <class T>
@@ -103,33 +119,22 @@ ostream &operator<<(ostream &os, List<T> &s)
         os << "[" << i << "]"
            << "  ";
     }
-    os << endl;
-
-    for (int i = 0; i < s.capacity; i++)
+    if (!s.IsEmpty())
     {
-        if (s.front + 1 > s.rear)
+        os << endl;
+        for (int i = 0; i < s.capacity; i++)
         {
-            if (i <= s.rear || i > s.front)
+            if (s.front + 1 > s.rear)
             {
-                os << s.queue[i] << "  ";
+                i > s.rear &&i <= s.front ? os << "     " : os << " " << s.queue[i] << "   ";
             }
             else
             {
-                os << "   ";
-            }
-        }
-        else
-        {
-            if (i < s.rear || i > s.front)
-            {
-                os << "   ";
-            }
-            else
-            {
-                os << s.queue[i] << "  ";
+                i <= s.rear &&i > s.front ? os << " " << s.queue[i] << "   " : os << "     ";
             }
         }
     }
+
     os << endl;
     return os;
 }
