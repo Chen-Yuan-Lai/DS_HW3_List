@@ -47,6 +47,11 @@ inline T &List<T>::Rear() const
 }
 
 template <class T>
+int List<T>::getSize()
+{
+}
+
+template <class T>
 void List<T>::changeSize(const int newSize)
 { // allocate an array with new size
     if (newSize < capacity)
@@ -73,18 +78,45 @@ void List<T>::changeSize(const int newSize)
 }
 
 template <class T>
-void List<T>::Delete(const int k)
+void List<T>::Delete(int k)
 { // Delete the kth element
     if (IsEmpty())
     {
         throw "List is empty. Caannot delete";
     }
-    if (front > rear)
+    else if (k == (front + 1) % capacity)
+    { // when queue only have one element or k is located in front
+        Pop();
+    }
+    else
     {
-        while (k == front + 1)
-        {
-            queue[k] = queue[--k]
+        if (k != rear)
+        { // move each element from k toward rear one index
+            while (k % capacity != rear)
+            {
+                queue[k % capacity] = queue[(k + 1) % capacity];
+                k = (k + 1) % capacity;
+            }
         }
+        // rear come back one index
+        rear--;
+        if (rear < 0)
+        {
+            rear = capacity + rear;
+        }
+    }
+}
+
+template <class T>
+void List<T>::Add(int k)
+{
+    if (IsEmpty())
+    {
+        throw "List is empty. Caannot delete";
+    }
+    else if (k == (front + 1) % capacity)
+    { // when queue only have one element or k is located in front
+        Pop();
     }
 }
 

@@ -29,7 +29,9 @@ public:
 
     int getElement(int loc) const;
 
-    void Delete(const int k);
+    void Delete(int k);
+
+    void Add(int k);
 
     void Push(const T &item);
     // Insert item at rear of the queue
