@@ -6,7 +6,8 @@ using namespace std;
 int main()
 {
     List<int> a;
-    a.Push(1);
+    a.Front();
+    // a.Push(1);
     // a.Push(2);
     // a.Push(3);
     // a.Push(4);
@@ -18,8 +19,9 @@ int main()
     // a.Pop();
     // a.Push(10);
     // a.Delete(1);
-    cout << a.getFront() << endl;
-    cout << a.getRear() << endl;
-    cout << a << endl;
+    // cout << a.getFront() << endl;
+    // cout << a.getRear() << endl;
+    // cout << a.getElement(10) << endl;
+    // cout << a << endl;
     return 0;
 }

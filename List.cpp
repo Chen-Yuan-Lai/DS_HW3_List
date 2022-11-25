@@ -6,12 +6,20 @@ using namespace std;
 template <class T>
 List<T>::List(int queueCapcity) : capacity(queueCapcity)
 { // constructor
-    if (capacity < 1)
+    try
     {
-        throw "List capacity must be > 0";
+        if (capacity < 1)
+        {
+            throw e1("List capacity must be > 0");
+        }
+        queue = new T[capacity];
+        front = rear = 0;
     }
-    queue = new T[capacity];
-    front = rear = 0;
+    catch (e1 &a)
+    {
+        cout << a.content() << endl;
+        return;
+    }
 }
 
 template <class T>
@@ -29,11 +37,19 @@ inline int List<T>::IsEmpty() const
 template <class T>
 inline T &List<T>::Front() const
 {
-    if (IsEmpty())
+    try
     {
-        throw "List is empty. No front element";
+        if (IsEmpty())
+        {
+            throw e1("List is empty. No front element");
+        }
+        return queue[(front + 1) % capacity];
     }
-    return queue[(front + 1) % capacity];
+    catch (e1 &a)
+    {
+        cout << a.content() << endl;
+    }
+    return;
 }
 
 template <class T>
@@ -47,8 +63,26 @@ inline T &List<T>::Rear() const
 }
 
 template <class T>
-int List<T>::getSize()
+T &List<T>::getElement(const int k) const
 {
+    int pos;
+    try
+    {
+        if (IsEmpty())
+            throw e1("List is empty");
+
+        pos = (front + k) % capacity;
+
+        if (pos > rear)
+            throw e1("The list dosen't have this element");
+
+        return queue[pos];
+    }
+    catch (e1 &a)
+    {
+        cout << a.content() << endl;
+        throw; // re-throw to stop the function
+    }
 }
 
 template <class T>
@@ -86,7 +120,8 @@ void List<T>::Delete(int k)
     }
     else if (k == (front + 1) % capacity)
     { // when queue only have one element or k is located in front
-        Pop();
+        front = (front + 1) % capacity;
+        queue[front].~T(); // destructor for T
     }
     else
     {

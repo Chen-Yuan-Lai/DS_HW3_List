@@ -25,9 +25,9 @@ public:
 
     int getRear() const { return rear; }
 
-    int getSize() const;
+    int getSize() const { return capacity; }
 
-    int getElement(int loc) const;
+    T &getElement(const int k) const;
 
     void Delete(int k);
 
@@ -50,5 +50,20 @@ private:
     int front,    // one counterclockwise from front
         rear,     // array position of rear element
         capacity; // capacity of queue array
+};
+
+// define custom exception type
+class e1 : public exception
+{
+public:
+    e1(string msg) : message(msg) {}
+    // override std:: what()
+    string content()
+    {
+        return message;
+    }
+
+private:
+    string message;
 };
 #endif
