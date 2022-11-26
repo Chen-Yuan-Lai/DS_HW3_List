@@ -29,9 +29,9 @@ public:
 
     T &getElement(const int k) const;
 
-    void Delete(int k);
+    void Delete(const int k);
 
-    void Add(int k);
+    void Insert(const T &y, const int k);
 
     void Push(const T &item);
     // Insert item at rear of the queue
