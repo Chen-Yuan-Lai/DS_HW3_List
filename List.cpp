@@ -13,6 +13,7 @@ List<T>::List(int queueCapcity) : capacity(queueCapcity)
     }
     queue = new T[capacity];
     front = rear = 0;
+    elementNum = rear >= front ? rear - front : capacity + rear - front;
 }
 
 template <class T>
@@ -52,8 +53,6 @@ T &List<T>::getElement(const int k) const
 {
     if (IsEmpty())
         throw e1("List is empty");
-    // how many elements in the list
-    int elementNum = rear > front ? rear - front : capacity + rear - front;
 
     if (k < 1 || k > elementNum)
         throw e1("unavailable k");
@@ -93,8 +92,6 @@ void List<T>::Delete(int k)
 { // Delete the kth element
     if (IsEmpty())
         throw e1("List is empty");
-    // how many elements in the list
-    int elementNum = rear > front ? rear - front : capacity + rear - front;
 
     if (k < 1 || k > elementNum)
         throw e1("unavailable k");
@@ -105,6 +102,7 @@ void List<T>::Delete(int k)
     { // when queue only have one element or the kth element is the (front + 1) of the queue
         front = (front + 1) % capacity;
         queue[front].~T(); // destructor for T
+        elementNum--;
     }
     else
     {
@@ -117,6 +115,7 @@ void List<T>::Delete(int k)
         // rear come back one index
         if (--rear < 0)
             rear = capacity + rear;
+        elementNum--;
     }
 }
 
@@ -125,33 +124,27 @@ void List<T>::Insert(const T &y, const int k)
 { // Insert an element y after the kth element.
     if (IsEmpty())
         throw e1("List is empty");
-
-    // how many elements in the list
-    int elementNum = rear > front ? rear - front : capacity + rear - front;
-
     if (k < 1 || k > elementNum)
         throw e1("unavailable k");
-
     if ((rear + 1) % capacity == front)
     { // queue full, double capacity
         changeSize(2 * capacity);
     }
     // get index
     int pos = (front + k) % capacity;
-
     if (pos == rear)
     { // when the kth element is the rear of the list
         rear = (rear + 1) % capacity;
         queue[rear] = y;
+        elementNum++;
     }
     else
     {
-
         int p = front;
         int num = 0;
         // loop k+1 times
         while (num < k)
-        { // use front to store new element
+        { // use front to store a new element
             queue[p] = queue[(p + 1) % capacity];
             p = (p + 1) % capacity;
             num++;
@@ -160,6 +153,7 @@ void List<T>::Insert(const T &y, const int k)
         front--;
         if (front < 0)
             front = capacity + front;
+        elementNum++;
     }
 }
 
@@ -172,6 +166,7 @@ void List<T>::Push(const T &x)
     }
     rear = (rear + 1) % capacity;
     queue[rear] = x;
+    elementNum++;
 }
 
 template <class T>
@@ -183,6 +178,7 @@ void List<T>::Pop()
     }
     front = (front + 1) % capacity;
     queue[front].~T(); // destructor for T
+    elementNum--;
 }
 
 template <class T>
